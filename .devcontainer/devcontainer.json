@@ -29,7 +29,8 @@
               "latexmk"
             ]
           }
-        ]
+        ],
+        "latex-workshop.formatting.latex": "latexindent"
       }
     }
   }

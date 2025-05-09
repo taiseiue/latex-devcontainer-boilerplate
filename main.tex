@@ -1,0 +1,138 @@
+%%
+%% This is file 'hello.tex'.
+%%
+%% Copyright (c) 2018-2023 Takayuki YATO (aka. "ZR")
+%%   GitHub:   https://github.com/zr-tex8r
+%%   Twitter:  @zr_tex8r
+%%
+%% This file is distributed under the MIT License.
+%%
+\documentclass[a4paper]{article}
+\ProvidesFile{hello.tex}[2023/02/25 v0.3 hello my workflow]
+\makeatletter %!!!!!!!!!!!!!!!!!!!!!!!!! TeX code BEGIN
+
+%--------------------------------------- engine check
+
+%% \my@if@primitive
+\def\my@if@primitive#1{%
+  \edef\my@tmpa{\string#1}\edef\my@tmpb{\meaning#1}%
+  \ifx\my@tmpa\my@tmpb \expandafter\@firstoftwo
+  \else \expandafter \@secondoftwo \fi}
+
+%% \my@engine : TeX engine type
+\let\my@engine=k
+\my@if@primitive\pdftexversion{\let\my@engine=P}{}
+\my@if@primitive\OmegaVersion{\let\my@engine=o}{}
+\my@if@primitive\luatexversion{\let\my@engine=L}{}
+\my@if@primitive\XeTeXversion{\let\my@engine=X}{}
+\my@if@primitive\kanjiskip{\let\my@engine=p}{}
+\my@if@primitive\kchardef{\let\my@engine=u}{}
+\my@if@primitive\ngbanner{\let\my@engine=A}{}
+\my@if@primitive\jintercharskip{\let\my@engine=j}{}
+\ifx u\my@engine
+  \ifnum\ucs"3000="3000 \else \let\my@engine=p \fi
+\fi
+
+%% \ifmy@pdf
+\newif\ifmy@pdf
+\@tempcnta\z@
+\my@if@primitive\pdfoutput{\@tempcnta\pdfoutput}{}
+\my@if@primitive\outputmode{\@tempcnta\outputmode}{}
+\ifnum\@tempcnta>\z@ \my@pdftrue \fi
+\if X\my@engine \my@pdftrue \fi
+\if A\my@engine \my@pdftrue \fi
+
+%% LuaTeX variants
+\if L\my@engine \ifx\luatexbanner\@undefined\else
+  \ifx\luaescapestring\@undefined\else
+    \ifcase\directlua{
+      local s = "\luaescapestring{\luatexbanner}"
+      if s:match("LuajitTeX") then tex.write("1")
+      elseif s:match("HarfTeX") then tex.write("2")
+      elseif s:match("LuaHBTeX") then tex.write("3")
+      else tex.write("0")
+      end}\relax
+    \or \let\my@engine=I % LuajitTeX
+    \or \let\my@engine=F % HarfTeX
+    \or \let\my@engine=H % LuaHBTeX
+    \fi
+  \fi
+\fi\fi
+
+%% \my@lmodern
+\if X\my@engine
+  \IfFileExists{tulmr.fd}{%
+    \expandafter\ifx\csname T@TU\endcsname\relax
+      \input{tuenc.def}%
+    \fi
+    \def\my@lmodern{\fontencoding{TU}}}%
+  {%else
+    \input{eu1enc.def}%
+    \def\my@lmodern{\fontencoding{EU1}}}%
+  \g@addto@macro\my@lmodern{\fontfamily{lmr}\selectfont}
+\fi
+
+%%<+> \myEngineName
+% Prints the name of the *LaTeX* engine in use.
+\newcommand*\myEngineName{%
+  \ifx P\my@engine
+    \ifmy@pdf pdf\/\fi \LaTeX
+  \else\ifx o\my@engine Lamed% forget about Lambda
+  \else\ifx L\my@engine Lua\LaTeX
+  \else\ifx I\my@engine Luajit\LaTeX
+  \else\ifx F\my@engine Lua\LaTeX\ (on Harf\TeX)%
+  \else\ifx H\my@engine Lua\LaTeX\ (on LuaHB\TeX)%
+  \else\ifx X\my@engine \begingroup
+      \my@lmodern X\kern-.125em\lower.5ex\hbox{\char"018E}%
+      \kern-.075em\LaTeX
+    \endgroup
+  \else\ifx p\my@engine p\LaTeX
+  \else\ifx u\my@engine up\LaTeX
+  \else\ifx A\my@engine Ap\LaTeX
+  \else\ifx j\my@engine
+    \leavevmode\lower.5ex\hbox{J}\kern-.1em \LaTeX
+  \else \LaTeX % good old...
+  \fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi}
+
+%--------------------------------------- dvips or dvipdfmx
+
+%% \my@hedge
+\def\my@hedge{2\paperwidth}
+
+%% \my@ps
+\def\my@ps#1{\special{ps:#1}}
+
+%% \my@F
+\def\my@F{gsave newpath F grestore 0 () gsave p grestore pop }
+
+%% \my@dvips@or@pdf{<dvips>}{<dvipdfmx>}
+\def\my@dvips@or@pdf#1#2{%
+  \leavevmode
+  \my@ps{currentpoint pop /F exch def}%
+  \kern\my@hedge
+  \my@ps{currentpoint pop \my@F sub /F exch def \my@F neg 0 translate}%
+  \hb@xt@\z@{#1\hss}%
+  \kern-\my@hedge \hb@xt@\z@{#2\hss}%
+  \my@ps{\my@F 0 translate}}
+
+%%<+> \myDviPsOrPdf{<trailer>}
+% Would print either 'dvips' or 'dvipdfm' plus the trailer, according
+% to the DVI driver actually in use. Note that the reference point
+% does not advance.
+\newcommand*\myDviPsOrPdf[1]{%
+  \my@dvips@or@pdf{dvips#1}{dvipdfmx#1}}
+
+%--------------------------------------- main
+
+%%<+> \myWorkflowName{<trailer>}
+\newcommand*\myWorkflowName[1]{%
+  \myEngineName
+  \ifmy@pdf #1%
+  \else \space+\space \myDviPsOrPdf{#1}%
+  \fi
+  \par}% avoid the influence of zero-advance
+
+\makeatother  %!!!!!!!!!!!!!!!!!!!!!!!!! TeX code END
+\begin{document}
+Hello, \myWorkflowName{!}
+\end{document}
