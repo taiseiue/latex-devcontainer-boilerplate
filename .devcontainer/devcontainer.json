@@ -9,7 +9,8 @@
     "vscode": {
       "extensions": [
         "James-Yu.latex-workshop",
-        "tomoki1207.pdf"
+        "tomoki1207.pdf",
+        "ICS.japanese-proofreading"
       ],
       "settings": {
         "latex-workshop.latex.tools": [
@@ -30,7 +31,21 @@
             ]
           }
         ],
-        "latex-workshop.formatting.latex": "latexindent"
+        "workbench.editor.enablePreview": false,
+        "editor.formatOnSave": true,
+        "[latex]": {
+          "editor.formatOnSave": true,
+          "editor.defaultFormatter": "James-Yu.latex-workshop"
+        },
+        "latex-workshop.formatting.latex": "latexindent",
+        "latex-workshop.formatting.latexindent.args": [
+          "%TMPFILE%",
+          "-c=%DIR%/",
+          "-y=defaultIndent: '%INDENT%'"
+        ],
+        "workbench.editorAssociations": {
+          "*.pdf": "latex-workshop-pdf-hook"
+        },
       }
     }
   }

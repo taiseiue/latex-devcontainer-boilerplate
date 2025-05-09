@@ -1,7 +1,24 @@
+#
+# ビルドステージ
+#
+FROM paperist/texlive-ja:latest AS builder
+RUN apt update && apt install -y git perl cpanminus build-essential \ 
+    && apt clean \
+    && rm -rf /var/lib/apt/lists/*
+# 関係するcpanモジュールをインストール
+RUN cpanm --notest App::cpanminus YAML::Tiny File::HomeDir
+# plistings.styをインストール
+RUN mkdir -p /usr/local/texlive/texmf-local/tex/latex/local \
+    && wget -O /usr/local/texlive/texmf-local/tex/latex/local/plistings.sty "https://raw.githubusercontent.com/h-kitagawa/plistings/master/plistings.sty"
+# TexLiveのパッケージをインストール
+RUN mktexlsr \
+    && tlmgr update --self --all \
+    && tlmgr install algorithms algorithmicx algpseudocodex latexindent
+
+#
+# DevContainer向けステージ
+#
 FROM paperist/texlive-ja:latest
-RUN apt update && apt install -y git && apt install -y build-essential
-RUN cpan -i App::cpanminus && cpanm YAML::Tiny && cpanm File::HomeDir
-RUN wget -P "/sty" "https://raw.githubusercontent.com/h-kitagawa/plistings/master/plistings.sty"
-RUN tlmgr update --self
-RUN tlmgr install latexindent
-CMD [ "bin/bash" ]
+COPY --from=builder /usr/local/texlive /usr/local/texlive
+COPY --from=builder /usr/local/share/perl /usr/local/share/perl
+CMD [ "bin/sh" ]

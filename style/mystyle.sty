@@ -1,0 +1,24 @@
+\usepackage{amssymb,amsmath} % 複雑な数式にAMS記法を使えるようにする c.f. https://texwiki.texjp.org/?LaTeX入門%2F複雑な数式
+\usepackage{bm} % ベクトル
+\usepackage{ascmac} % 文書整形 c.f. https://cns-guide.sfc.keio.ac.jp/2001/11/4/8.html
+\usepackage{multirow} % 図表
+\usepackage{graphicx} % 画像の挿入 c.f. https://texwiki.texjp.org/?graphicx
+\usepackage{float} % 任意の位置に配置できるようにする
+\usepackage{verbatim} % 生文字列
+\usepackage{listings, plistings} % ソースコード
+\usepackage{url} % Url
+\usepackage[table,xcdraw]{xcolor} % 色変更
+\usepackage[dvipdfmx]{hyperref} % Urlをクリック可能にする
+
+% \usepackage{minted} % ソースコード(Pygments)
+
+\hypersetup{% https://mathlandscape.com/latex-hyperref/ 
+  hidelinks, % リンクに色や枠をつけない。リンク自体は残る。印刷時にこうすることにする。
+  colorlinks=false%
+}
+
+\newcommand{\figref}[1]{図~\ref{#1}} % 図の参照
+\newcommand{\tabref}[1]{表~\ref{#1}} % 表の参照
+\newcommand{\equref}[1]{式~\eqref{#1}} % 式の参照
+\newcommand{\mrm}[1]{\mbox{$_{\mathrm{#1}}$}} % 数式中の文字をローマン体にする
+\newcommand{\crm}[1]{\mbox{$\,\mathrm{#1}$}} % 数式中の文字をローマン体にする
