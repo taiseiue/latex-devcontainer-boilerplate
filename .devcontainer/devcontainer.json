@@ -5,6 +5,7 @@
   },
   "workspaceFolder": "/workspace",
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+  "postCreateCommand": "ln -sf /workspace/.latexmkrc ~/.latexmkrc && ln -sf /workspace/style /usr/local/texlive/texmf-local/tex/latex/local/style",
   "customizations": {
     "vscode": {
       "extensions": [

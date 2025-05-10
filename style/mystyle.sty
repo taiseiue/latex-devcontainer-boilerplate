@@ -22,3 +22,10 @@
 \newcommand{\equref}[1]{式~\eqref{#1}} % 式の参照
 \newcommand{\mrm}[1]{\mbox{$_{\mathrm{#1}}$}} % 数式中の文字をローマン体にする
 \newcommand{\crm}[1]{\mbox{$\,\mathrm{#1}$}} % 数式中の文字をローマン体にする
+
+
+\makeatletter
+\def\Hline{% \Hlineでより太い罫線を引く
+\noalign{\ifnum0=`}\fi\hrule \@height 1.5pt \futurelet
+  \reserved@a\@xhline}
+\makeatother
