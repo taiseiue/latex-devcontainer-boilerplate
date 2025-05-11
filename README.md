@@ -22,7 +22,7 @@ VS Codeで、LaTex文章の作成に必要な環境をDevContainerにまとめ�
 2. リポジトリをcloneして、VS Codeで開きます。
 3. 右下にポップアップする「Reopen in Container」をクリックします。
 
-> [!NOTE] s
+> [!NOTE]
 > `./.latexmkrc`はリポジトリ全体に適用されます。記事ごとに別々に設定する場合は、記事と同じディレクトリに`.latexmkrc`を配置します。
 > 
 > また、`./style`以下のstyファイルはリポジトリ全体`\usepackage{style/mystyle}`と書くことで読み込めます。
