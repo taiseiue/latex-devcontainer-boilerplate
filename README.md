@@ -25,7 +25,7 @@ VS Codeで、LaTex文章の作成に必要な環境をDevContainerにまとめ�
 > [!NOTE]
 > `./.latexmkrc`はリポジトリ全体に適用されます。記事ごとに別々に設定する場合は、記事と同じディレクトリに`.latexmkrc`を配置します。
 > 
-> また、`./style`以下のstyファイルはリポジトリ全体`\usepackage{style/mystyle}`と書くことで読み込めます。
+> また、`./style`以下のstyファイルはリポジトリ全体で読み込めます。新たに追加した後はウィンドウを再読み込みしてください。
 
 ### Why did you make it?
 
