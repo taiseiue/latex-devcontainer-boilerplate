@@ -2,9 +2,7 @@
 # ビルドステージ
 #
 FROM paperist/texlive-ja:latest AS builder
-RUN apt update && apt install -y git perl cpanminus build-essential \ 
-    && apt clean \
-    && rm -rf /var/lib/apt/lists/*
+RUN apt update && apt install -y --no-install-recommends git perl cpanminus build-essential 
 # 関係するcpanモジュールをインストール
 RUN cpanm --notest App::cpanminus YAML::Tiny File::HomeDir
 # plistings.styをインストール
@@ -21,4 +19,5 @@ RUN mktexlsr \
 FROM paperist/texlive-ja:latest
 COPY --from=builder /usr/local/texlive /usr/local/texlive
 COPY --from=builder /usr/local/share/perl /usr/local/share/perl
+RUN apt update && apt install -y --no-install-recommends git
 CMD [ "bin/sh" ]
