@@ -19,5 +19,5 @@ RUN mktexlsr \
 FROM paperist/texlive-ja:latest
 COPY --from=builder /usr/local/texlive /usr/local/texlive
 COPY --from=builder /usr/local/share/perl /usr/local/share/perl
-RUN apt update && apt install -y --no-install-recommends git gnupg2
+RUN apt update && apt install -y --no-install-recommends git gnupg2 openssh-client
 CMD [ "bin/sh" ]
