@@ -1,3 +1,5 @@
+#!/usr/bin/env perl
+
 $latex = 'uplatex -synctex=1 -halt-on-error -interaction=nonstopmode';
 $bibtex = 'upbibtex';
 $dvipdf = 'dvipdfmx %O -o %D %S';
