@@ -13,6 +13,7 @@ VS Codeで、LaTex文章の作成に必要な環境をDevContainerにまとめ�
 - mendex
 - LaTeX Workshop
 - テキスト校正くん
+- SyncTex
 
 ### Usage
 
@@ -26,6 +27,8 @@ VS Codeで、LaTex文章の作成に必要な環境をDevContainerにまとめ�
 > `./.latexmkrc`はリポジトリ全体に適用されます。記事ごとに別々に設定する場合は、記事と同じディレクトリに`.latexmkrc`を配置します。
 > 
 > また、`./style`以下のstyファイルはリポジトリ全体で読み込めます。新たに追加した後はウィンドウを再読み込みしてください。
+
+- SyncTeXに対応しています。PDF内のテキストをCmd+クリック(Windowsの場合はCtrl+クリック)で該当箇所にジャンプできます。TexからPDFにジャンプするには、Tex上でコマンドパレットから「SyncTeX from cursor」を選択します。
 
 ### Why did you make it?
 
