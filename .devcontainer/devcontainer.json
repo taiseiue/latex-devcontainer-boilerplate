@@ -3,9 +3,14 @@
   "build": {
     "dockerfile": "Dockerfile"
   },
+  "containerUser": "latex",
   "workspaceFolder": "/workspace",
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
-  "postCreateCommand": "ln -sf /workspace/.latexmkrc ~/.latexmkrc && ln -sf /workspace/style /usr/local/texlive/texmf-local/tex/latex/local/style && cd /usr/local/texlive/texmf-local/tex/latex/local/style && mktexlsr",
+  "mounts": [
+    "source=${localWorkspaceFolder}/.latexmkrc,target=/home/latex/.latexmkrc,type=bind,consistency=cached",
+    "source=${localWorkspaceFolder}/style,target=/usr/local/texlive/texmf-local/tex/latex/local/style,type=bind,consistency=cached"
+  ],
+  "postCreateCommand": "cd /usr/local/texlive/texmf-local/tex/latex/local/style && mktexlsr",
   "customizations": {
     "vscode": {
       "extensions": [
@@ -19,6 +24,8 @@
             "name": "latexmk",
             "command": "latexmk",
             "args": [
+              "-time",
+              "-outdir=%OUTDIR%",
               "%DOC%"
             ],
             "env": {}
@@ -26,12 +33,13 @@
         ],
         "latex-workshop.latex.recipes": [
           {
-            "name": "default",
+            "name": "latexmk",
             "tools": [
               "latexmk"
             ]
           }
         ],
+        "latex-workshop.latex.recipe.default": "latexmk",
         "workbench.editor.enablePreview": false,
         "editor.formatOnSave": true,
         "[latex]": {
@@ -44,9 +52,10 @@
           "-c=%DIR%/",
           "-y=defaultIndent: '%INDENT%'"
         ],
+        "latex-workshop.linting.chktex.enabled": true,
         "workbench.editorAssociations": {
           "*.pdf": "latex-workshop-pdf-hook"
-        },
+        }
       }
     }
   }

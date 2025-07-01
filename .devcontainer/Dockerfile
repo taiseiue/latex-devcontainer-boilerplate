@@ -1,7 +1,7 @@
 #
 # ビルドステージ
 #
-FROM paperist/texlive-ja:latest AS builder
+FROM paperist/texlive-ja:2024-debian AS builder
 RUN apt update && apt install -y --no-install-recommends git perl cpanminus build-essential 
 # 関係するcpanモジュールをインストール
 RUN cpanm --notest App::cpanminus YAML::Tiny File::HomeDir
@@ -16,8 +16,15 @@ RUN mktexlsr \
 #
 # DevContainer向けステージ
 #
-FROM paperist/texlive-ja:latest
-COPY --from=builder /usr/local/texlive /usr/local/texlive
-COPY --from=builder /usr/local/share/perl /usr/local/share/perl
+FROM paperist/texlive-ja:2024-debian
+
+ARG USER=latex
+
+RUN groupadd -g 1000 ${USER} && useradd -m -u 1000 -g ${USER} ${USER}
+COPY --from=builder --chown=${USER}:${USER} /usr/local/texlive /usr/local/texlive
+COPY --from=builder --chown=${USER}:${USER} /usr/local/share/perl /usr/local/share/perl
+
 RUN apt update && apt install -y --no-install-recommends git gnupg2 openssh-client
+
+USER ${USER}
 CMD [ "bin/sh" ]
