@@ -24,7 +24,7 @@ RUN groupadd -g 1000 ${USER} && useradd -m -u 1000 -g ${USER} ${USER}
 COPY --from=builder --chown=${USER}:${USER} /usr/local/texlive /usr/local/texlive
 COPY --from=builder --chown=${USER}:${USER} /usr/local/share/perl /usr/local/share/perl
 
-RUN apt update && apt install -y --no-install-recommends git gnupg2 openssh-client
+RUN apt update && apt install -y --no-install-recommends git gnupg2 openssh-client chktex
 
 USER ${USER}
 CMD [ "bin/sh" ]
