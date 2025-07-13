@@ -2,7 +2,7 @@
 # ビルドステージ
 #
 FROM paperist/texlive-ja:2024-debian AS builder
-RUN apt update && apt install -y --no-install-recommends git perl cpanminus build-essential 
+RUN apt update && apt install -y --no-install-recommends git perl cpanminus build-essential
 # 関係するcpanモジュールをインストール
 RUN cpanm --notest App::cpanminus YAML::Tiny File::HomeDir
 # plistings.styをインストール
@@ -20,11 +20,17 @@ FROM paperist/texlive-ja:2024-debian
 
 ARG USER=latex
 
-RUN groupadd -g 1000 ${USER} && useradd -m -u 1000 -g ${USER} ${USER}
+RUN apt update && \
+    apt install -y --no-install-recommends sudo git gnupg2 openssh-client chktex
+
+# Create user and set up sudoers
+RUN groupadd -g 1000 ${USER} && \
+    useradd -m -u 1000 -g ${USER} ${USER} && \
+    echo "${USER} ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/${USER} && \
+    chmod 0440 /etc/sudoers.d/${USER}
+
 COPY --from=builder --chown=${USER}:${USER} /usr/local/texlive /usr/local/texlive
 COPY --from=builder --chown=${USER}:${USER} /usr/local/share/perl /usr/local/share/perl
-
-RUN apt update && apt install -y --no-install-recommends git gnupg2 openssh-client chktex
 
 USER ${USER}
 CMD [ "bin/sh" ]
