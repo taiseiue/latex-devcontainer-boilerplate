@@ -34,6 +34,15 @@ VS Codeで、LaTex文章の作成に必要な環境をDevContainerにまとめ�
 
 大学の学生実験でのレポート提出に備えて作成しました。
 
+### Support
+このプロジェクトでは、GMO FlattSecurity社の「GMO オープンソース開発者応援プログラム」の支援を受けて、「Takumi byGMO」によるセキュリティ診断を定期的に行っています。
+
+<a href="https://flatt.tech/oss/gmo/trampoline" target="_blank"><img src="https://flatt.tech/assets/images/badges/gmo-oss.svg" height="24px"/></a>
+
+このプロジェクトが良いと思ったら、ぜひ少額のご支援をお願いします！
+
+<a href="https://www.buymeacoffee.com/taiseiue" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+
 ### License
 このボイラープレートは、[The MIT License](./LICENSE.txt)のもとで公開します。
 
