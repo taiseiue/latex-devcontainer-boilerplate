@@ -318,4 +318,4 @@ TSWLatexianTemp*
 *.log
 *.out
 *.synctex.gz
-*.pdf
+#*.pdf
