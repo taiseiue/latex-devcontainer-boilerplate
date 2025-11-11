@@ -20,9 +20,30 @@
 \newcommand{\figref}[1]{図~\ref{#1}} % 図の参照
 \newcommand{\tabref}[1]{表~\ref{#1}} % 表の参照
 \newcommand{\equref}[1]{式~\eqref{#1}} % 式の参照
+\newcommand\coderef[1]{\textbf{コード~\ref{#1}}}  % コードの参照
+\renewcommand{\lstlistingname}{コード} % コードのキャプション名を「コード」に変更
 \newcommand{\mrm}[1]{\mbox{$_{\mathrm{#1}}$}} % 数式中の文字をローマン体にする
 \newcommand{\crm}[1]{\mbox{$\,\mathrm{#1}$}} % 数式中の文字をローマン体にする
 
+%ソースコードの表示に関する設定
+\lstset{
+  basicstyle={\ttfamily},
+  identifierstyle={\small},
+  commentstyle={\itshape\small},
+  keywordstyle={\small\bfseries},
+  ndkeywordstyle={\small},
+  stringstyle={\small\ttfamily},
+  frame={tb},
+  breaklines=true,
+  columns=[l]{fullflexible},
+  numbers=left,
+  xrightmargin=0zw,
+  xleftmargin=3zw,
+  numberstyle={\scriptsize},
+  stepnumber=1,
+  numbersep=1zw,
+  lineskip=-0.5ex,
+}
 
 \makeatletter
 \def\Hline{% \Hlineでより太い罫線を引く
