@@ -54,6 +54,18 @@
           "-y=defaultIndent: '%INDENT%'"
         ],
         "latex-workshop.linting.chktex.enabled": true,
+        "latex-workshop.linting.chktex.args": [
+          "-wall",
+          "-q",
+          "-n1",
+          "-n2",
+          "-n19",
+          "-n22",
+          "-n30",
+          "-n36",
+          "-n44",
+          "-e16"
+        ],
         "workbench.editorAssociations": {
           "*.pdf": "latex-workshop-pdf-hook"
         }
