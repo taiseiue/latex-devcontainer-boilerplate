@@ -1,7 +1,7 @@
 #
 # ビルドステージ
 #
-FROM paperist/texlive-ja:2024-debian AS builder
+FROM paperist/texlive-ja:2025-debian AS builder
 RUN apt-get update && apt-get install -y --no-install-recommends git perl cpanminus build-essential
 # 関係するcpanモジュールをインストール
 RUN cpanm --notest App::cpanminus YAML::Tiny File::HomeDir
@@ -16,7 +16,7 @@ RUN mktexlsr \
 #
 # DevContainer向けステージ
 #
-FROM paperist/texlive-ja:2024-debian
+FROM paperist/texlive-ja:2025-debian
 
 ARG USER=latex
 
